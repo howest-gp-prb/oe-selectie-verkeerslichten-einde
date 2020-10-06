@@ -27,20 +27,44 @@ namespace Prb.Verkeerslichten.WPF
             InitializeComponent();
         }
         Random rnd = new Random();
-        int randomColor;
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            randomColor = rnd.Next(1, 4);
             HandleTrafficLights();
         }
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            randomColor = rnd.Next(1, 4);
             HandleTrafficLights();
         }
-
+        private void HandleTrafficLights()
+        {
+            int randomColor = rnd.Next(1, 4);
+            string fileName = "";
+            if (randomColor == 1)
+            {
+                lblInfo.Content = "ORANJE" + Environment.NewLine + "Als het veilig is dan zou je nu best stoppen.";
+                lblInfo.Background = Brushes.Orange;
+                lblInfo.Foreground = Brushes.White;
+                fileName = "verkeer_oranje.png";
+            }
+            else if (randomColor == 2)
+            {
+                lblInfo.Content = "ROOD" + Environment.NewLine + "Gooi onmiddellijk alles dicht!";
+                lblInfo.Background = Brushes.Tomato;
+                lblInfo.Foreground = Brushes.White;
+                fileName = "verkeer_rood.png";                
+            }
+            else
+            {
+                lblInfo.Content = "GROEN" + Environment.NewLine + "Karren maar.  Alles veilig.";
+                lblInfo.Background = Brushes.ForestGreen;
+                lblInfo.Foreground = Brushes.White;
+                fileName = "verkeer_groen.png";
+            }
+            SetTrafficLightImagePath(fileName);
+        }
         private void SetTrafficLightImagePath(string fileName)
         {
+
             string pad = Environment.CurrentDirectory;
             DirectoryInfo directoryInfo = new DirectoryInfo(pad);
             directoryInfo = new DirectoryInfo(directoryInfo.Parent.Parent.Parent.FullName);
@@ -48,33 +72,6 @@ namespace Prb.Verkeerslichten.WPF
             imgTrafficLight.Source = new BitmapImage(uri);
 
         }
-        private void HandleTrafficLights()
-        {
-            string fileName = "";
-            if (randomColor == 1)
-            {
-                lblInfo.Content = "ORANJE" + Environment.NewLine + "Als het veilig is dan kan zou je nu best stoppen.";
-                lblInfo.Background = Brushes.Orange;
-                lblInfo.Foreground = Brushes.White;
-                fileName = "/verkeer_oranje.png";
-            }
-            else if (randomColor == 2)
-            {
-                lblInfo.Content = "ROOD" + Environment.NewLine + "Gooi onmiddellijk alles dicht!";
-                lblInfo.Background = Brushes.Tomato;
-                lblInfo.Foreground = Brushes.White;
-                fileName = "/verkeer_rood.png";                
-            }
-            else
-            {
-                lblInfo.Content = "GROEN" + Environment.NewLine + "Karren maar.  Alles veilig.";
-                lblInfo.Background = Brushes.ForestGreen;
-                lblInfo.Foreground = Brushes.White;
-                fileName = "/verkeer_groen.png";
-            }
-            SetTrafficLightImagePath(fileName);
-        }
-
 
     }
 }
